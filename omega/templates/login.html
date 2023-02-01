@@ -1,0 +1,76 @@
+<!-- Store this code in 'login.html' file inside the 'templates' folder -->
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title> Login </title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">          
+    </head>
+    <body></br></br></br></br></br>
+        <div align="center">
+          <div align="center" class="border">
+             <div class="header">
+                <h1 class="word" id="title">{{hash}}</h1>
+                <script> 
+                    function setTitle(value){
+                        var title_field = document.getElementById('title');
+                        title_field.innerHTML = value;
+                    }   
+    
+                    fetch('/test')
+                    .then(function (response) {
+                        return response.json();
+                    }).then(function (text) {
+                        console.log('GET response:');
+                        console.log(text.hash); 
+                        setTitle(text.hash);
+                    });
+
+                    function verifySite(){
+                        fetch('/verify')
+                    .then(function (response) {
+                        return response.json();
+                    }).then(function (text) {
+                        console.log('GET response:');
+                        console.log(text.hash); 
+                        alert('Hello World!')
+                        setTitle(text.hash);
+                    });
+                    }
+    
+                    </script>
+             </div></br></br></br>
+            <h2 class="word">
+                <form action="{{ url_for('login') }}" method="post">
+                  <div class="msg">{{ msg }}</div>
+                    <input id="username" name="username" type="text" placeholder="Enter Your Username" class="textbox"/></br></br>
+                    <input id="two_factor_btn" type="button" class="btn" onclick="verifySite()" value="Authenticate" disabled="disabled"></br></br>
+                    <input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox" disabled="disabled"/></br></br></br>
+                    <script>
+                        const login_field = document.getElementById('username');
+                        login_field.addEventListener('input', enablePassword);
+                        
+                        function enablePassword() {
+                                var empty = true;
+                                if (document.getElementById('username').value != '') {
+                                 empty= false;
+                                }
+                                if (empty) {
+                                    document.getElementById('password').setAttribute('disabled','disabled');
+                                    document.getElementById('two_factor_btn').setAttribute('disabled','disabled');
+                                    
+                                } else {
+                                    document.getElementById('password').removeAttribute('disabled');
+                                    document.getElementById('two_factor_btn').removeAttribute('disabled');
+                                }
+                        }
+
+                        </script>
+                    <input type="submit" class="btn" value="Sign In"></br></br>
+                </form>
+            </h2>
+            <p class="bottom">Don't have an account?  <a class="bottom" href="{{url_for('register')}}"> Sign Up here</a></p>
+          </div>
+        </div>
+    </body>
+</html>
