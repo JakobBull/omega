@@ -2,14 +2,19 @@
  
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session
 from flaskext.mysql import MySQL
+#from flask_mysqldb import MySQL
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 import re
  
 from src.field import User, Service, Network
  
 app = Flask(__name__)
- 
-#app.secret_key = 'your secret key'
+app.config["JWT_SECRET_KEY"] = "demo-key"
 
+jwt = JWTManager(app)
 
 mysql = MySQL(app, host="localhost", user="root", password="Jakob@multiplii2021", db="geeklogin", autocommit=True)
 mysql.init_app(app)
@@ -18,6 +23,10 @@ mysql.init_app(app)
 #setup blockchain etc
 user1 = User()
 network = Network()
+service1 = Service("Facebook", "https://www.facebook.com/")
+network.add_key(service1.public_key, service1)
+service2 = Service("Omega", "https://omegaauthentication.com/")
+network.add_key(service2.public_key, service2)
 
 @app.route('/')
 @app.route('/login', methods =['GET', 'POST'])
@@ -35,6 +44,7 @@ def login():
             session['id'] = account['id']
             session['username'] = account['username']
             msg = 'Logged in successfully !'
+            access_token = create_access_token(identity=username)
             return render_template('index.html', msg = msg)
         else:
             msg = 'Incorrect username / password !'
@@ -72,17 +82,25 @@ def register():
             msg = 'Please fill out the form !'
         else:
             cursor.execute('INSERT INTO accounts VALUES (NULL, % s, % s, % s)', (username, password, email, ))
-            mysql.connection.commit()
+            #mysql.connection.commit()
+            mysql.connect().commit()
             msg = 'You have successfully registered !'
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
     return render_template('register.html', msg = msg, hash=hash)
 
+@app.route('/index', methods = ['GET', 'POST'])
+@jwt_required()
+def index():
+    return render_template('index.html')
+
 @app.route('/test', methods=['GET', 'POST'])
 def testfn():
     # GET request
     if request.method == 'GET':
-        message = {'hash':'0xhjhnjb'}
+        msg = 'change-later'
+        sig = str(service2.sign(msg))
+        message = {'msg': msg, 'sig': sig}
         return jsonify(message)  # serialize and use JSON headers
     # POST request
     if request.method == 'POST':
@@ -93,12 +111,13 @@ def testfn():
 def verifyfn():
     # GET request
     if request.method == 'GET':
-        message = {'hash':'0xhjhnjb'}
+        message = {'hash': '0xhjdhfd'}
         return jsonify(message)  # serialize and use JSON headers
     # POST request
     if request.method == 'POST':
-        print(request.get_json())  # parse as JSON
-        return 'Success', 200
+        print("APP:", request.get_json())  # parse as JSON
+        #return 'Success', 200
+        return jsonify(request.get_json())
 
 if __name__ == "__main__":
     app.run()

@@ -1,5 +1,7 @@
 import rsa
 import time
+import validators
+
 from src.block import Block, Blockchain
 
 class Field:
@@ -36,7 +38,12 @@ class Network:
 
 class Service:
 
-    def __init__(self) -> None:
+    def __init__(self, name, url) -> None:
+        self.name = name
+        if validators.url(url):
+            self.url = url
+        else:
+            raise IOError("The provided url format is incorrect for: ", url)
         self._private_key = None
         self.public_key = None
         self.generate_keys()
@@ -75,7 +82,7 @@ class User:
         service_feature(self)
 
 user1 = User()
-service1 = Service()
+service1 = Service("hello", "https://www.hello.com/")
 
 network = Network()
 network.add_key(service1.public_key, service1)
