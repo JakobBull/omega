@@ -1,3 +1,12 @@
+"""
+Main module.
+
+Arguments passed as follows:
+IP address
+Port number: Must be greater than 10000.
+API Port number: For example 5000, 5001, 5002, ...
+"""
+
 from Transaction import Transaction
 from Wallet import Wallet
 from TransactionPool import TransactionPool
@@ -20,3 +29,4 @@ if __name__ == '__main__':
     node = Node(ip, port, keyFile)
     node.startP2P()
     node.startAPI(apiPort)
+ 

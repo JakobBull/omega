@@ -17,6 +17,9 @@ class SocketCommunication(Node):
         if self.socketConnector.port != 10001:
             self.connect_with_node('localhost', 10001)
 
+    """
+    Opens port and initiates communication.
+    """
     def startSocketCommunication(self, node):
         self.node = node
         self.start()

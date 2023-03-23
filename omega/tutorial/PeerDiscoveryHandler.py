@@ -4,17 +4,26 @@ from Message import Message
 from BlockchainUtils import BlockchainUtils
 
 
+"""
+Runs a thread for each node and looks for other nodes initiating connections.
+"""
 class PeerDiscoveryHandler():
 
     def __init__(self, node):
         self.socketCommunication = node
 
+    """
+    Initiates a thread for both status and discovery.
+    """
     def start(self):
         statusThread = threading.Thread(target=self.status, args=())
         statusThread.start()
         discoveryThread = threading.Thread(target=self.discovery, args=())
         discoveryThread.start()
 
+    """
+    Status thread just prints current connections every 5s.
+    """
     def status(self):
         while True:
             print('Current Connections:')
@@ -22,16 +31,23 @@ class PeerDiscoveryHandler():
                 print(str(peer.ip) + ':' + str(peer.port))
             time.sleep(5)
 
+    """
+    Discovery thread broadcasts handshake message.
+    """
     def discovery(self):
         while True:
             handshakeMessage = self.handshakeMessage()
             self.socketCommunication.broadcast(handshakeMessage)
             time.sleep(10)
 
+    """
+    Handshake sebds handshake message.
+    """
     def handshake(self, connected_node):
         handshakeMessage = self.handshakeMessage()
         self.socketCommunication.send(connected_node, handshakeMessage)
 
+    
     def handshakeMessage(self):
         ownConnector = self.socketCommunication.socketConnector
         ownPeers = self.socketCommunication.peers

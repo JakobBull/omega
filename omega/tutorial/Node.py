@@ -8,6 +8,14 @@ from BlockchainUtils import BlockchainUtils
 import copy
 
 
+
+"""
+Manages communication between Blockchain, P2P network, and REST API.
+
+Args:
+
+
+"""
 class Node():
 
     def __init__(self, ip, port, key=None):
@@ -20,6 +28,9 @@ class Node():
         if key is not None:
             self.wallet.fromKey(key)
 
+    """
+    Initiate P2P communication.
+    """
     def startP2P(self):
         self.p2p = SocketCommunication(self.ip, self.port)
         self.p2p.startSocketCommunication(self)

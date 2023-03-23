@@ -20,10 +20,16 @@ if __name__ == '__main__':
 
     #forger: genesis
     postTransaction(exchange, alice, 100, 'EXCHANGE')
+    print("Done 1.")
     postTransaction(exchange, bob, 100, 'EXCHANGE')
+    print("Done 2.")
     postTransaction(exchange, bob, 10, 'EXCHANGE')
+    print("Done 3.")
 
     # forger: probably alice
     postTransaction(alice, alice, 25, 'STAKE')
+    print("Done 4.")
     postTransaction(alice, bob, 1, 'TRANSFER')
+    print("Done 5.")
     postTransaction(alice, bob, 1, 'TRANSFER')
+    print("Done 6.")

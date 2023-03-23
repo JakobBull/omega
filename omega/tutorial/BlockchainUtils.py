@@ -12,6 +12,9 @@ class BlockchainUtils():
         dataHash = SHA256.new(dataBytes)
         return dataHash
 
+    """
+    Encodes message so that it can be sent across P2P.
+    """
     @staticmethod
     def encode(objectToEncode):
         return jsonpickle.encode(objectToEncode, unpicklable=True)
