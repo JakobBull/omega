@@ -47,7 +47,10 @@ class PeerDiscoveryHandler():
         handshakeMessage = self.handshakeMessage()
         self.socketCommunication.send(connected_node, handshakeMessage)
 
-    
+
+    """
+    Message sent to all connected nodes.
+    """    
     def handshakeMessage(self):
         ownConnector = self.socketCommunication.socketConnector
         ownPeers = self.socketCommunication.peers
@@ -57,6 +60,9 @@ class PeerDiscoveryHandler():
         encodedMessage = BlockchainUtils.encode(message)
         return encodedMessage
 
+    """
+    Handles discovery message and connects peers not yet conencted.
+    """
     def handleMessage(self, message):
         peersSocketConnector = message.senderConnector
         peersPeerList = message.data

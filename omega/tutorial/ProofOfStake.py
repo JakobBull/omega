@@ -9,7 +9,7 @@ class ProofOfStake():
         self.setGenesisNodeStake()
 
     def setGenesisNodeStake(self):
-        genesisPublicKey = open('keys/genesisPublicKey.pem', 'r').read()
+        genesisPublicKey = open('omega/tutorial/keys/genesisPublicKey.pem', 'r').read()
         self.stakers[genesisPublicKey] = 1
 
     def update(self, publicKeyString, stake):
@@ -34,6 +34,7 @@ class ProofOfStake():
     def winnerLot(self, lots, seed):
         winnerLot = None
         leastOffset = None
+        #reference hash value we find nearest hash
         referenceHashIntValue = int(BlockchainUtils.hash(seed).hexdigest(), 16)
         for lot in lots:
             lotIntValue = int(lot.lotHash(), 16)

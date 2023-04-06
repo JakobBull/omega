@@ -25,6 +25,9 @@ class TransactionPool():
                 newPoolTransactions.append(poolTransaction)
         self.transactions = newPoolTransactions
 
+    """
+    Check if threshold in transaction pool is reached, requiring a new forger.
+    """
     def forgingRequired(self):
         if len(self.transactions) >= 1:
             return True

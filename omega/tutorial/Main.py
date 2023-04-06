@@ -5,6 +5,8 @@ Arguments passed as follows:
 IP address
 Port number: Must be greater than 10000.
 API Port number: For example 5000, 5001, 5002, ...
+
+FIRST NODE MUST HAVE RECEIVING PORT 10001
 """
 
 from Transaction import Transaction

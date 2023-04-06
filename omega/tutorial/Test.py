@@ -1,6 +1,7 @@
 from ProofOfStake import ProofOfStake
 from Lot import Lot
 import string
+from tqdm import tqdm
 import random
 
 
@@ -15,15 +16,17 @@ if __name__ == '__main__':
     pos.update('bob', 100)
     pos.update('alice', 100)
 
-    bobWins = 0
-    aliceWins = 0
+    for _ in range(10):
+        bobWins = 0
+        aliceWins = 0
+        for i in tqdm(range(100)):
+            forger = pos.forger(getRandomString(i))
+            if forger == 'bob':
+                bobWins += 1
+            elif forger == 'alice':
+                aliceWins += 1
+            else:
+                print(forger)
 
-    for i in range(100):
-        forger = pos.forger(getRandomString(i))
-        if forger == 'bob':
-            bobWins += 1
-        elif forger == 'alice':
-            aliceWins += 1
-
-    print('Bob won: ' + str(bobWins) + ' times')
-    print('Alice won: ' + str(aliceWins) + ' times')
+        print('Bob won: ' + str(bobWins) + ' times')
+        print('Alice won: ' + str(aliceWins) + ' times')
