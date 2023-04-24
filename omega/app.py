@@ -118,6 +118,18 @@ def verifyfn():
         print("APP:", request.get_json())  # parse as JSON
         #return 'Success', 200
         return jsonify(request.get_json())
+    
+@app.route('/requestStatus', methods=['GET', 'POST'])
+def status_request():
+    # GET request
+    if request.method == 'GET':
+        message = {'hash': '0xhjdhfd'}
+        return jsonify(message)  # serialize and use JSON headers
+    # POST request
+    if request.method == 'POST':
+        request_data = request.get_json()
+        return_data = jsonify({"website_name": "example_name"})        #return 'Success', 200
+        return return_data, 200
 
 if __name__ == "__main__":
     app.run()

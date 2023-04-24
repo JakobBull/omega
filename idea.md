@@ -14,5 +14,21 @@ The solution then is two-fold. First, websites must be required to authenticate 
 
 Step 1: To authenticate
 
+Send to blockchain to verify: 
+
+Website has to sign "own_name+user_account_id+current_token"
+
+sends json {name: own_name,  signature: signed_str}
+
+if signature is valid:
+    blockchain broadcasts {user_id: user_id, name: website_name}
+
+#TODO: no real way to enforce the way that companies validate 
+
+For now:
+app simply returns a challenge and a success message signed with users private key
+
+
+
 ## TODO:
 

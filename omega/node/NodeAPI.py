@@ -42,3 +42,14 @@ class NodeAPI(FlaskView):
         node.handleTransaction(transaction)
         response = {'message': 'Received transaction'}
         return jsonify(response), 201
+    
+    """@route('/api/verify', methods=['GET', 'POST'])
+    def testfn():
+        # GET request
+        if request.method == 'GET':
+            data = node.blocks[-1].blockCount
+            return jsonify(), 200
+        # POST request
+        if request.method == 'POST':
+            print(request.get_json())  # parse as JSON
+            return 'Success', 200"""
