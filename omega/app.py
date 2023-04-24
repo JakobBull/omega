@@ -7,6 +7,7 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 import re
  
+from flaskext.mysql import MySQL
 from omega.src.field import User, Service, Network
 from omega.src.models import Website
 
@@ -22,7 +23,6 @@ backend = Website(app)
 @app.route('/login', methods =['GET', 'POST'])
 def login():
     msg = ''
-    print(request.form)
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
