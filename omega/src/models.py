@@ -2,6 +2,7 @@ from flaskext.mysql import MySQL
 import hashlib
 
 from omega.node.Node import Node
+from omega.src.blockchain_interaction import Message
 
 node = Node(10001, 50001, None)
 print(node)
@@ -45,6 +46,9 @@ class Website:
         cursor.execute('SELECT * FROM accounts WHERE username = % s', (username, ))
         account = cursor.fetchone()
         return account
+    
+    def broadcast_signup_request(self, username):
+        payload = Message('public-key', {'username': username, 'password': 'passwordhash'})
 
 
 class WebsiteBlockchainInterface:

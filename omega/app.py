@@ -16,7 +16,6 @@ app.config["SECRET_KEY"] = "demo-key"
 app.config["JWT_SECRET_KEY"] = "demo-key"
 
 jwt = JWTManager(app)
-
 backend = Website(app)
 
 @app.route('/')
