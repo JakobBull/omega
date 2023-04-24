@@ -1,5 +1,0 @@
-setup.py
-omega.egg-info/PKG-INFO
-omega.egg-info/SOURCES.txt
-omega.egg-info/dependency_links.txt
-omega.egg-info/top_level.txt
