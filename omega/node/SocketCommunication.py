@@ -1,7 +1,7 @@
 from p2pnetwork.node import Node
-from PeerDiscoveryHandler import PeerDiscoveryHandler
-from SocketConnector import SocketConnector
-from BlockchainUtils import BlockchainUtils
+from omega.node.PeerDiscoveryHandler import PeerDiscoveryHandler
+from omega.node.SocketConnector import SocketConnector
+from omega.node.BlockchainUtils import BlockchainUtils
 import json
 
 

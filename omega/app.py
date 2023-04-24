@@ -7,8 +7,8 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 import re
  
-from src.field import User, Service, Network
-from src.models import Website
+from omega.src.field import User, Service, Network
+from omega.src.models import Website
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "demo-key"

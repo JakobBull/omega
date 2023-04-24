@@ -9,15 +9,15 @@ API Port number: For example 5000, 5001, 5002, ...
 FIRST NODE MUST HAVE RECEIVING PORT 10001
 """
 
-from Transaction import Transaction
-from Wallet import Wallet
-from TransactionPool import TransactionPool
-from Block import Block
-from Blockchain import Blockchain
+from omega.node.Transaction import Transaction
+from omega.node.Wallet import Wallet
+from omega.node.TransactionPool import TransactionPool
+from omega.node.Block import Block
+from omega.node.Blockchain import Blockchain
 import pprint
-from BlockchainUtils import BlockchainUtils
-from AccountModel import AccountModel
-from Node import Node
+from omega.node.BlockchainUtils import BlockchainUtils
+from omega.node.AccountModel import AccountModel
+from omega.node.Node import Node
 import sys
 
 if __name__ == '__main__':

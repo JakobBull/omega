@@ -1,5 +1,5 @@
-from ProofOfStake import ProofOfStake
-from Lot import Lot
+from omega.node.ProofOfStake import ProofOfStake
+from omega.node.Lot import Lot
 import string
 from tqdm import tqdm
 import random

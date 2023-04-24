@@ -1,4 +1,4 @@
-from BlockchainUtils import BlockchainUtils
+from omega.node.BlockchainUtils import BlockchainUtils
 
 
 class Lot():

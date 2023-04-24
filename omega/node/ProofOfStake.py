@@ -1,5 +1,5 @@
-from BlockchainUtils import BlockchainUtils
-from Lot import Lot
+from omega.node.BlockchainUtils import BlockchainUtils
+from omega.node.Lot import Lot
 
 
 class ProofOfStake():
@@ -9,7 +9,7 @@ class ProofOfStake():
         self.setGenesisNodeStake()
 
     def setGenesisNodeStake(self):
-        genesisPublicKey = open('keys/genesisPublicKey.pem', 'r').read()
+        genesisPublicKey = open('omega/node/keys/genesisPublicKey.pem', 'r').read()
         self.stakers[genesisPublicKey] = 1
 
     def update(self, publicKeyString, stake):

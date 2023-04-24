@@ -1,7 +1,7 @@
 import threading
 import time
-from Message import Message
-from BlockchainUtils import BlockchainUtils
+from omega.node.Message import Message
+from omega.node.BlockchainUtils import BlockchainUtils
 
 
 """

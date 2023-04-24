@@ -1,6 +1,11 @@
 from flaskext.mysql import MySQL
 import hashlib
 
+from omega.node.Node import Node
+
+node = Node(10001, 50001, None)
+print(node)
+
 class User:
 
     def __init__(self, username, password_hash, location=None):
@@ -40,17 +45,16 @@ class Website:
         return account
 
 
-class Node:
+class WebsiteBlockchainInterface:
 
-    def __init__(self):
+    def __init__(self) -> None:
+        self.status = None
+
+    def _update_status(self):
         pass
 
-    def authenticate(self):
+    def broadcast_request(self):
         pass
 
-    def create_blocK(self):
+    def inbound_message(self):
         pass
-
-class Network:
-
-    def __init__(self):

@@ -1,7 +1,7 @@
-from Block import Block
-from BlockchainUtils import BlockchainUtils
-from AccountModel import AccountModel
-from ProofOfStake import ProofOfStake
+from omega.node.Block import Block
+from omega.node.BlockchainUtils import BlockchainUtils
+from omega.node.AccountModel import AccountModel
+from omega.node.ProofOfStake import ProofOfStake
 
 
 class Blockchain():

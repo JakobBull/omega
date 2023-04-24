@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import requests
-from node.BlockchainUtils import BlockchainUtils
+from omega.node.BlockchainUtils import BlockchainUtils
 
 @dataclass
 class Message:

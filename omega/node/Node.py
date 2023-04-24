@@ -1,10 +1,10 @@
-from Blockchain import Blockchain
-from TransactionPool import TransactionPool
-from Wallet import Wallet
-from SocketCommunication import SocketCommunication
-from NodeAPI import NodeAPI
-from Message import Message
-from BlockchainUtils import BlockchainUtils
+from omega.node.Blockchain import Blockchain
+from omega.node.TransactionPool import TransactionPool
+from omega.node.Wallet import Wallet
+from omega.node.SocketCommunication import SocketCommunication
+from omega.node.NodeAPI import NodeAPI
+from omega.node.Message import Message
+from omega.node.BlockchainUtils import BlockchainUtils
 import copy
 
 

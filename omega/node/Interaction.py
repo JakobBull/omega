@@ -1,5 +1,5 @@
-from Wallet import Wallet
-from BlockchainUtils import BlockchainUtils
+from omega.node.Wallet import Wallet
+from omega.node.BlockchainUtils import BlockchainUtils
 import requests
 
 

@@ -2,7 +2,7 @@ import rsa
 import time
 import validators
 
-from src.block import Block, Blockchain
+from omega.src.block import Block, Blockchain
 
 class Field:
 
