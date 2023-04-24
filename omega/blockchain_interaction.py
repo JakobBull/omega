@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import requests
-from tutorial.BlockchainUtils import BlockchainUtils
+from node.BlockchainUtils import BlockchainUtils
 
 @dataclass
 class Message:
@@ -8,6 +8,21 @@ class Message:
     def __init__(self, name, data) -> None:
         self.name = name
         self.data = data
+
+class BlockchainInterface:
+     
+    def __init__(self) -> None:
+          self.status = None
+        
+    def broadcast_login_request(self):
+        pass
+
+class UserModel:
+     
+    def __init__(self) -> None:
+            self.username = None
+            self.password = None
+            self.public_key = None
         
 
 def verification_request(website_name, user_name, url="http://localhost:5000/api/verify"):

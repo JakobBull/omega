@@ -1,8 +1,6 @@
 # Store this code in 'app.py' file
  
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session
-from flaskext.mysql import MySQL
-#from flask_mysqldb import MySQL
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
@@ -10,23 +8,15 @@ from flask_jwt_extended import JWTManager
 import re
  
 from src.field import User, Service, Network
- 
+from src.models import Website
+
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "demo-key"
 app.config["JWT_SECRET_KEY"] = "demo-key"
 
 jwt = JWTManager(app)
 
-mysql = MySQL(app, host="localhost", user="root", password="Jakob@multiplii2021", db="geeklogin", autocommit=True)
-mysql.init_app(app)
-
-
-#setup blockchain etc
-user1 = User()
-network = Network()
-service1 = Service("Facebook", "https://www.facebook.com/")
-network.add_key(service1.public_key, service1)
-service2 = Service("Omega", "https://omegaauthentication.com/")
-network.add_key(service2.public_key, service2)
+backend = Website(app)
 
 @app.route('/')
 @app.route('/login', methods =['GET', 'POST'])
@@ -36,13 +26,11 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
-        cursor = mysql.get_db().cursor()
-        cursor.execute('SELECT * FROM accounts WHERE username = % s AND password = % s', (username, password, ))
-        account = cursor.fetchone()
+        account = backend.check_login(username, password)
         if account:
             session['loggedin'] = True
-            session['id'] = account['id']
-            session['username'] = account['username']
+            session['id'] = account[0]
+            session['username'] = account[1]
             msg = 'Logged in successfully !'
             access_token = create_access_token(identity=username)
             return render_template('index.html', msg = msg)
@@ -62,16 +50,10 @@ def register():
     msg = ''
     hash = ''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form :
-        service1 = Service()
-        network.add_key(service1.public_key, service1)
-        hash = service1.public_key
-
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-        cursor = mysql.get_db().cursor()
-        cursor.execute('SELECT * FROM accounts WHERE username = % s', (username, ))
-        account = cursor.fetchone()
+        account = backend.check_account(username)
         if account:
             msg = 'Account already exists !'
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
@@ -81,9 +63,7 @@ def register():
         elif not username or not password or not email:
             msg = 'Please fill out the form !'
         else:
-            cursor.execute('INSERT INTO accounts VALUES (NULL, % s, % s, % s)', (username, password, email, ))
-            #mysql.connection.commit()
-            mysql.connect().commit()
+            backend.create_account(username, password, email)
             msg = 'You have successfully registered !'
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
@@ -99,9 +79,7 @@ def testfn():
     # GET request
     if request.method == 'GET':
         msg = 'change-later'
-        sig = str(service2.sign(msg))
-        message = {'msg': msg, 'sig': sig}
-        return jsonify(message)  # serialize and use JSON headers
+        return jsonify(msg)  # serialize and use JSON headers
     # POST request
     if request.method == 'POST':
         print(request.get_json())  # parse as JSON
@@ -121,13 +99,15 @@ def verifyfn():
     
 @app.route('/requestStatus', methods=['GET', 'POST'])
 def status_request():
+    request_data = request.get_json()
     # GET request
-    if request.method == 'GET':
-        message = {'hash': '0xhjdhfd'}
-        return jsonify(message)  # serialize and use JSON headers
-    # POST request
     if request.method == 'POST':
-        request_data = request.get_json()
+        # request : {public_key, signed_approval}
+        #check that public key matches signature
+        return None, 200  # serialize and use JSON headers
+    # POST request
+    if request.method == 'GET':
+        #request has public key of customer account, use this to send encrypted data
         return_data = jsonify({"website_name": "example_name"})        #return 'Success', 200
         return return_data, 200
 
