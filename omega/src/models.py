@@ -4,7 +4,9 @@ import hashlib
 from omega.node.Node import Node
 from omega.src.blockchain_interaction import Message
 
-node = Node(10001, 50001, None)
+node = Node('localhost', 10002, "omega/node/keys/stakerPrivateKey.pem")
+node.startP2P()
+node.startAPI(5002)
 print(node)
 
 class User:

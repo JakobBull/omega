@@ -16,6 +16,16 @@ class Wallet():
             key = RSA.importKey(keyfile.read())
         self.keyPair = key
 
+    def toKey(self, file, keyType='private'):
+        if keyType=='public':
+            with open(file, 'wb') as f:
+                f.write(self.keyPair.publickey().exportKey('PEM'))
+        else:
+            with open(file, 'wb') as f:
+                f.write(self.keyPair.exportKey('PEM'))
+
+
+
     def sign(self, data):
         dataHash = BlockchainUtils.hash(data)
         signatureSchemeObject = PKCS1_v1_5.new(self.keyPair)
