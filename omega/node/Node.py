@@ -6,7 +6,10 @@ from omega.node.NodeAPI import NodeAPI
 from omega.node.Message import Message
 from omega.node.BlockchainUtils import BlockchainUtils
 import copy
+from typing import TYPE_CHECKING
 
+if TYPE_CHECKING:
+    from omega.node.Transaction import Transaction
 
 
 """
@@ -40,7 +43,7 @@ class Node():
         self.api.injectNode(self)
         self.api.start(apiPort)
 
-    def handleTransaction(self, transaction):
+    def handleTransaction(self, transaction: "Transaction"):
         data = transaction.payload()
         signature = transaction.signature
         signerPublicKey = transaction.senderPublicKey

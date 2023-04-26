@@ -3,7 +3,7 @@ import requests
 from omega.node.BlockchainUtils import BlockchainUtils
 
 @dataclass
-class Message:
+class LoginMessage:
 
     def __init__(self, name, data) -> None:
         self.name = name

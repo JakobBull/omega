@@ -32,3 +32,10 @@ app simply returns a challenge and a success message signed with users private k
 
 ## TODO:
 
+
+Type checking with
+
+`from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from models import Book`

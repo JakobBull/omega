@@ -1,3 +1,7 @@
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from omega.node.Transaction import Transaction
 class AccountModel():
 
     def __init__(self):
@@ -6,9 +10,17 @@ class AccountModel():
         self.messages = {}
 
     def toJson(self):
-        return {'accounts': self.accounts,
-                'balances': self.balances,
-                'messages': self.messages}
+        account_placeholders = [f'Account{number}' for number in range(len(self.accounts))]
+        #To make sure dictionary ordering is consistent
+        balances_list = [self.balances[index] for index in self.accounts]
+        messages_list = [self.messages[index] for index in self.accounts]
+
+        return {'accounts': {placeholder: account for (placeholder, account) in zip(account_placeholders, self.accounts)},
+                'balances': {placeholder: balance for (placeholder, balance) in zip(account_placeholders, balances_list)},
+                'messages': {placeholder: message for (placeholder, message) in zip(account_placeholders, messages_list)}}
+
+    def handleMessage(self, transaction: "Transaction"):
+        pass
 
     def addAccount(self, publicKeyString):
         if not publicKeyString in self.accounts:

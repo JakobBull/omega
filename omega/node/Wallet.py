@@ -44,9 +44,9 @@ class Wallet():
             'PEM').decode('utf-8')
         return publicKeyString
 
-    def createTransaction(self, receiver, amount, type):
+    def createTransaction(self, receiver, amount, type, message=None):
         transaction = Transaction(
-            self.publicKeyString(), receiver, amount, type)
+            self.publicKeyString(), receiver, amount, type, message=message)
         signature = self.sign(transaction.payload())
         transaction.sign(signature)
         return transaction

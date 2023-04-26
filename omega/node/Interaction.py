@@ -2,10 +2,9 @@ from omega.node.Wallet import Wallet
 from omega.node.BlockchainUtils import BlockchainUtils
 import requests
 
-
-def postTransaction(sender, receiver, amount, type):
+def postTransaction(sender: Wallet, receiver: Wallet, amount, type, message=None):
     transaction = sender.createTransaction(
-        receiver.publicKeyString(), amount, type)
+        receiver.publicKeyString(), amount, type, message=message)
     url = "http://localhost:5000/transaction"
     package = {'transaction': BlockchainUtils.encode(transaction)}
     request = requests.post(url, json=package)
@@ -15,7 +14,7 @@ if __name__ == '__main__':
 
     bob = Wallet()
     alice = Wallet()
-    alice.fromKey('keys/stakerPrivateKey.pem')
+    alice.fromKey('omega/node/keys/stakerPrivateKey.pem')
     exchange = Wallet()
 
     #forger: genesis
@@ -23,8 +22,9 @@ if __name__ == '__main__':
     print("Done 1.")
     postTransaction(exchange, bob, 100, 'EXCHANGE')
     print("Done 2.")
-    postTransaction(exchange, bob, 10, 'EXCHANGE')
+    postTransaction(alice, bob, 0, 'TRANSFER', message=['Hello Bob!'])
     print("Done 3.")
+
 
     # forger: probably alice
     postTransaction(alice, alice, 25, 'STAKE')

@@ -74,6 +74,8 @@ class Blockchain():
             amount = transaction.amount
             self.accountModel.updateBalance(sender, -amount)
             self.accountModel.updateBalance(receiver, amount)
+        if transaction.message:
+            self.accountModel.handleMessage(transaction)
 
     def nextForger(self):
         lastBlockHash = BlockchainUtils.hash(

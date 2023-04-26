@@ -1,10 +1,13 @@
 import time
 import copy
+from typing import TYPE_CHECKING
 
+if TYPE_CHECKING:
+    from omega.node.Transaction import Transaction
 
 class Block():
 
-    def __init__(self, transactions, lastHash, forger, blockCount):
+    def __init__(self, transactions: "Transaction", lastHash, forger, blockCount):
         self.blockCount = blockCount
         self.transactions = transactions
         self.lastHash = lastHash

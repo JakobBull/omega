@@ -1,6 +1,10 @@
 from flask_classful import FlaskView, route
 from flask import Flask, jsonify, request
 from omega.node.BlockchainUtils import BlockchainUtils
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from omega.node.Node import Node
 
 node = None
 
@@ -14,7 +18,7 @@ class NodeAPI(FlaskView):
         NodeAPI.register(self.app, route_base='/')
         self.app.run(host='localhost', port=port)
 
-    def injectNode(self, injectedNode):
+    def injectNode(self, injectedNode: "Node"):
         global node
         node = injectedNode
 
@@ -27,7 +31,7 @@ class NodeAPI(FlaskView):
         return node.blockchain.toJson(), 200
     
     @route('/accountModel', methods=['GET'])
-    def blockchain(self):
+    def accountModel(self):
         return node.blockchain.accountModel.toJson(), 200
 
     @route('/transactionPool', methods=['GET'])
