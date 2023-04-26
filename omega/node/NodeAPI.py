@@ -25,6 +25,10 @@ class NodeAPI(FlaskView):
     @route('/blockchain', methods=['GET'])
     def blockchain(self):
         return node.blockchain.toJson(), 200
+    
+    @route('/accountModel', methods=['GET'])
+    def blockchain(self):
+        return node.blockchain.accountModel.toJson(), 200
 
     @route('/transactionPool', methods=['GET'])
     def transactionPool(self):

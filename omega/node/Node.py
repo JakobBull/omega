@@ -95,7 +95,6 @@ class Node():
 
     def forge(self):
         forger = self.blockchain.nextForger()
-        print(forger, self.wallet.publicKeyString())
         if forger == self.wallet.publicKeyString():
             print('i am the forger')
             block = self.blockchain.createBlock(

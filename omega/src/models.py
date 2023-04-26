@@ -2,12 +2,9 @@ from flaskext.mysql import MySQL
 import hashlib
 
 from omega.node.Node import Node
-from omega.src.blockchain_interaction import Message
-
-node = Node('localhost', 10002, "omega/node/keys/stakerPrivateKey.pem")
-node.startP2P()
-node.startAPI(5002)
-print(node)
+#from omega.src.blockchain_interaction import Message
+from omega.node.Message import Message
+from omega.node.BlockchainUtils import BlockchainUtils
 
 class User:
 
@@ -57,12 +54,17 @@ class WebsiteBlockchainInterface:
 
     def __init__(self) -> None:
         self.status = None
+        self.node = Node('localhost', 10050)
+        self.node.startP2P()
+        self.node.startAPI(5050)
+        print(f"Started Interface at ports 10050 and 5050.")
 
     def _update_status(self):
         pass
 
     def broadcast_request(self):
-        pass
+        message = Message(self.p2p.socketConnector, 'BLOCKCHAINREQUEST', None)
+        self.node.p2p.broadcast(BlockchainUtils.encode(message))
 
     def inbound_message(self):
         pass

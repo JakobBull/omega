@@ -24,8 +24,6 @@ class Wallet():
             with open(file, 'wb') as f:
                 f.write(self.keyPair.exportKey('PEM'))
 
-
-
     def sign(self, data):
         dataHash = BlockchainUtils.hash(data)
         signatureSchemeObject = PKCS1_v1_5.new(self.keyPair)

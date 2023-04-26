@@ -5,7 +5,7 @@ import copy
 
 class Transaction():
 
-    def __init__(self, senderPublicKey, receiverPublicKey, amount, type):
+    def __init__(self, senderPublicKey, receiverPublicKey, amount, type, message=None):
         self.senderPublicKey = senderPublicKey
         self.receiverPublicKey = receiverPublicKey
         self.amount = amount
@@ -13,6 +13,7 @@ class Transaction():
         self.id = (uuid.uuid1()).hex
         self.timestamp = time.time()
         self.signature = ''
+        self.message = message
 
     def toJson(self):
         return self.__dict__
